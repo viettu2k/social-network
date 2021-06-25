@@ -15,6 +15,29 @@ class Signup extends Component {
         this.setState({ [name]: event.target.value });
     };
 
+    clickSubmit = (event) => {
+        event.preventDefault();
+        const { name, email, password } = this.state;
+        const user = {
+            name,
+            email,
+            password,
+        };
+        // console.log(user);
+        fetch("http://localhost:8080/signup", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(user),
+        })
+            .then((response) => {
+                return response.json();
+            })
+            .catch((error) => console.log(error));
+    };
+
     render() {
         const { name, email, password } = this.state;
         return (
@@ -49,7 +72,10 @@ class Signup extends Component {
                             value={password}
                         />
                     </div>
-                    <button className="btn btn-raised btn-primary">
+                    <button
+                        onClick={this.clickSubmit}
+                        className="btn btn-raised btn-primary"
+                    >
                         Sign up
                     </button>
                 </form>
