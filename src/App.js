@@ -1,9 +1,13 @@
-function App() {
+import React from "react";
+import { BrowserRouter } from "react-router-dom";
+import MainRouter from "./MainRouter";
+
+const App = () => {
     return (
-        <div className="container">
-            <h1>React frontend</h1>
-        </div>
+        <BrowserRouter>
+            <MainRouter />
+        </BrowserRouter>
     );
-}
+};
 
 export default App;
