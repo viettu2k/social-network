@@ -9,6 +9,7 @@ class Signup extends Component {
             password: "",
             error: "",
             open: false,
+            loading: false,
         };
     }
 
@@ -19,6 +20,7 @@ class Signup extends Component {
 
     clickSubmit = (event) => {
         event.preventDefault();
+        this.setState({ loading: true });
         const { name, email, password } = this.state;
         const user = {
             name,
@@ -27,7 +29,8 @@ class Signup extends Component {
         };
         // console.log(user);
         this.signup(user).then((data) => {
-            if (data.error) this.setState({ error: data.error });
+            if (data.error)
+                this.setState({ error: data.error, loading: false });
             else
                 this.setState({
                     name: "",
@@ -93,7 +96,7 @@ class Signup extends Component {
     };
 
     render() {
-        const { name, email, password, error, open } = this.state;
+        const { name, email, password, error, open, loading } = this.state;
         return (
             <div className="container">
                 <h2 className="mt-5 mb-5">Sign Up</h2>
@@ -111,6 +114,14 @@ class Signup extends Component {
                 >
                     New account is successfully created! Please Sign In!
                 </div>
+
+                {loading ? (
+                    <div className="jumbotron text-center">
+                        <h2>Loading...</h2>
+                    </div>
+                ) : (
+                    ""
+                )}
 
                 {this.signupForm(name, email, password)}
             </div>
