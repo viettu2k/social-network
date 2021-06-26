@@ -1,22 +1,10 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import { signout, isAuthenticated } from "../auth";
 
 const isActive = (history, path) => {
     if (history.location.pathname === path) return { color: "#EDF57C" };
     else return { color: "#fff" };
-};
-
-export const signout = (next) => {
-    if (typeof window !== "undefined") localStorage.removeItem("jwt");
-    next();
-    return fetch("http://localhost:8080/signout", {
-        method: "GET",
-    })
-        .then((response) => {
-            console.log("signout", response);
-            return response.json();
-        })
-        .catch((err) => console.log(err));
 };
 
 const Menu = ({ history }) => (
@@ -32,39 +20,52 @@ const Menu = ({ history }) => (
                 </Link>
             </li>
 
-            <li className="nav-item">
-                <Link
-                    className="nav-link"
-                    style={isActive(history, "/signin")}
-                    to="/signin"
-                >
-                    Sign In
-                </Link>
-            </li>
+            {!isAuthenticated() && (
+                <>
+                    <li className="nav-item">
+                        <Link
+                            className="nav-link"
+                            style={isActive(history, "/signin")}
+                            to="/signin"
+                        >
+                            Sign In
+                        </Link>
+                    </li>
 
-            <li className="nav-item">
-                <Link
-                    className="nav-link"
-                    style={isActive(history, "/signup")}
-                    to="/signup"
-                >
-                    Sign Up
-                </Link>
-            </li>
+                    <li className="nav-item">
+                        <Link
+                            className="nav-link"
+                            style={isActive(history, "/signup")}
+                            to="/signup"
+                        >
+                            Sign Up
+                        </Link>
+                    </li>
+                </>
+            )}
 
-            <li className="nav-item">
-                <span
-                    className="nav-link"
-                    style={
-                        (isActive(history, "/signup"),
-                        { cursor: "pointer", color: "white" })
-                    }
-                    onClick={() => signout(() => history.push("/"))}
-                    href="/"
-                >
-                    Sign Out
-                </span>
-            </li>
+            {isAuthenticated() && (
+                <>
+                    <li className="nav-item">
+                        <span
+                            className="nav-link"
+                            style={
+                                (isActive(history, "/signup"),
+                                { cursor: "pointer", color: "white" })
+                            }
+                            onClick={() => signout(() => history.push("/"))}
+                        >
+                            Sign Out
+                        </span>
+                    </li>
+
+                    <li className="nav-item">
+                        <span className="nav-link">
+                            {isAuthenticated().user.name}
+                        </span>
+                    </li>
+                </>
+            )}
         </ul>
     </div>
 );

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { signup } from "../auth";
 
 class Signup extends Component {
     constructor() {
@@ -9,7 +10,6 @@ class Signup extends Component {
             password: "",
             error: "",
             open: false,
-            loading: false,
         };
     }
 
@@ -20,7 +20,7 @@ class Signup extends Component {
 
     clickSubmit = (event) => {
         event.preventDefault();
-        this.setState({ loading: true });
+
         const { name, email, password } = this.state;
         const user = {
             name,
@@ -28,9 +28,8 @@ class Signup extends Component {
             password,
         };
         // console.log(user);
-        this.signup(user).then((data) => {
-            if (data.error)
-                this.setState({ error: data.error, loading: false });
+        signup(user).then((data) => {
+            if (data.error) this.setState({ error: data.error });
             else
                 this.setState({
                     name: "",
@@ -80,23 +79,8 @@ class Signup extends Component {
         </form>
     );
 
-    signup = (user) => {
-        return fetch("http://localhost:8080/signup", {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(user),
-        })
-            .then((response) => {
-                return response.json();
-            })
-            .catch((error) => console.log(error));
-    };
-
     render() {
-        const { name, email, password, error, open, loading } = this.state;
+        const { name, email, password, error, open } = this.state;
         return (
             <div className="container">
                 <h2 className="mt-5 mb-5">Sign Up</h2>
@@ -114,14 +98,6 @@ class Signup extends Component {
                 >
                     New account is successfully created! Please Sign In!
                 </div>
-
-                {loading ? (
-                    <div className="jumbotron text-center">
-                        <h2>Loading...</h2>
-                    </div>
-                ) : (
-                    ""
-                )}
 
                 {this.signupForm(name, email, password)}
             </div>
