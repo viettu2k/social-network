@@ -5,16 +5,18 @@ import Menu from "./core/Menu.component";
 import Signup from "./user/Signup.component";
 import Signin from "./user/Signin.component";
 import Profile from "./user/Profile.component";
+import Users from "./user/Users.component";
 
 const MainRouter = () => (
     <div>
         <Menu />
         <Switch>
             <Route exact path="/" component={Home} />
+            <Route exact path="/users" component={Users} />
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/signin" component={Signin} />
             <Route exact path="/user/:userId" component={Profile} />
-        </Switch>
+        </Switch>{" "}
     </div>
 );
 
