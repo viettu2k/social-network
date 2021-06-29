@@ -3,6 +3,7 @@ import { isAuthenticated } from "../auth";
 import { Redirect, Link } from "react-router-dom";
 import { read } from "./apiUser";
 import DefaultProfile from "../images/avatar.jpg";
+import DeleteUser from "./DeleteUser.component";
 
 class Profile extends Component {
     constructor() {
@@ -29,6 +30,11 @@ class Profile extends Component {
         this.init(userId);
     }
 
+    componentWillReceiveProps(props) {
+        const userId = props.match.params.userId;
+        this.init(userId);
+    }
+
     render() {
         const { redirectToSignin, user } = this.state;
         if (redirectToSignin) return <Redirect to="/signin" />;
@@ -42,11 +48,7 @@ class Profile extends Component {
                             src={DefaultProfile}
                             className="card-img-top"
                             alt={user.name}
-                            style={{
-                                width: "18rem",
-                                height: "18rem  ",
-                                objectFit: "cover",
-                            }}
+                            style={{ height: "300px" }}
                         />
                     </div>
 
@@ -61,7 +63,7 @@ class Profile extends Component {
 
                         {isAuthenticated().user &&
                             isAuthenticated().user._id === user._id && (
-                                <div className="d-inline-block">
+                                <div className="d-inline-block      ">
                                     <Link
                                         className="btn btn-raised btn-success mr-5"
                                         to={`/user/edit/${user._id}`}
@@ -69,9 +71,7 @@ class Profile extends Component {
                                         Edit Profile
                                     </Link>
 
-                                    <button className="btn btn-raised btn-danger">
-                                        Delete Profile
-                                    </button>
+                                    <DeleteUser userId={user._id}></DeleteUser>
                                 </div>
                             )}
                     </div>

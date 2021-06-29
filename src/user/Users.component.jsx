@@ -26,14 +26,10 @@ class Users extends Component {
             {users.map((user, i) => (
                 <div className="card col-md-4" key={i}>
                     <img
+                        style={{ height: "300px", width: "auto" }}
                         src={DefaultProfile}
                         className="card-img-top"
                         alt={user.name}
-                        style={{
-                            width: "18rem",
-                            height: "18rem  ",
-                            objectFit: "cover",
-                        }}
                     />
                     <div className="card-body">
                         <h5 className="card-title">{user.name}</h5>
