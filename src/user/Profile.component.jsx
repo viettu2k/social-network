@@ -48,7 +48,7 @@ class Profile extends Component {
                             src={DefaultProfile}
                             className="card-img-top"
                             alt={user.name}
-                            style={{ height: "300px" }}
+                            style={{ height: "200px", width: "200px" }}
                         />
                     </div>
 
