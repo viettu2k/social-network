@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import { read, update } from "./apiUser";
+import DefaultProfile from "../images/avatar.jpg";
 
 class EditPofile extends Component {
     constructor() {
@@ -40,7 +41,14 @@ class EditPofile extends Component {
     }
 
     isValid = () => {
-        const { name, email, password } = this.state;
+        const { name, email, password, fileSize } = this.state;
+        if (fileSize > 100000) {
+            this.setState({
+                error: "File size should be less than 100kb",
+                loading: false,
+            });
+            return false;
+        }
         if (name.length === 0) {
             this.setState({ error: "Name is required" });
             return false;
@@ -63,6 +71,7 @@ class EditPofile extends Component {
         this.setState({ error: "" });
         const value =
             name === "photo" ? event.target.files[0] : event.target.value;
+
         const fileSize = name === "photo" ? event.target.files[0].size : 0;
         this.userData.set(name, value);
         this.setState({ [name]: value, fileSize });
@@ -141,16 +150,22 @@ class EditPofile extends Component {
             return <Redirect to={`/user/${id}`}></Redirect>;
         }
 
+        const photoUrl = id
+            ? `${
+                  process.env.REACT_APP_API_URL
+              }/user/photo/${id}?${new Date().getTime()}`
+            : DefaultProfile;
+
         return (
             <div className="container">
+                <h2 className="mt-5 mb-5">Edit Profile</h2>
+
                 <div
                     className="alert alert-danger"
                     style={{ display: error ? "" : "none" }}
                 >
                     {error}
                 </div>
-
-                <h2 className="mt-5 mb-5">Edit Profile</h2>
 
                 {loading ? (
                     <div className="jumbotron text-center">
@@ -159,6 +174,14 @@ class EditPofile extends Component {
                 ) : (
                     ""
                 )}
+
+                <img
+                    style={{ height: "200px", width: "auto" }}
+                    className="img-thumbnail"
+                    src={photoUrl}
+                    onError={(i) => (i.target.src = `${DefaultProfile}`)}
+                    alt={name}
+                />
 
                 {this.signupForm(name, email, password)}
             </div>
