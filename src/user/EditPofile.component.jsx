@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { isAuthenticated } from "../auth";
-import { read, update } from "./apiUser";
+import { read, update, updateUser } from "./apiUser";
 import DefaultProfile from "../images/avatar.jpg";
 
 class EditPofile extends Component {
@@ -16,6 +16,7 @@ class EditPofile extends Component {
             error: "",
             fileSize: 0,
             loading: false,
+            about: "",
         };
     }
     init = (userId) => {
@@ -29,6 +30,7 @@ class EditPofile extends Component {
                     name: data.name,
                     email: data.email,
                     error: "",
+                    about: data.about,
                 });
             }
         });
@@ -50,18 +52,22 @@ class EditPofile extends Component {
             return false;
         }
         if (name.length === 0) {
-            this.setState({ error: "Name is required" });
+            this.setState({ error: "Name is required", loading: false });
             return false;
         }
         // email@domain.com
         if (!/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
             this.setState({
                 error: "A valid Email is required",
+                loading: false,
             });
             return false;
         }
         if (password.length >= 1 && password.length <= 5) {
-            this.setState({ error: "Password must be at least 6 characters" });
+            this.setState({
+                error: "Password must be at least 6 characters",
+                loading: false,
+            });
             return false;
         }
         return true;
@@ -88,14 +94,16 @@ class EditPofile extends Component {
             update(userId, token, this.userData).then((data) => {
                 if (data.error) this.setState({ error: data.error });
                 else
-                    this.setState({
-                        redirectToProfile: true,
+                    updateUser(data, () => {
+                        this.setState({
+                            redirectToProfile: true,
+                        });
                     });
             });
         }
     };
 
-    signupForm = (name, email, password) => (
+    signupForm = (name, email, password, about) => (
         <form>
             <div className="form-group">
                 <label className="text-muted">Profile Photo</label>
@@ -125,6 +133,15 @@ class EditPofile extends Component {
                 />
             </div>
             <div className="form-group">
+                <label className="text-muted">About</label>
+                <textarea
+                    onChange={this.handleChange("about")}
+                    type="text"
+                    className="form-control"
+                    value={about}
+                />
+            </div>
+            <div className="form-group">
                 <label className="text-muted">Password</label>
                 <input
                     onChange={this.handleChange("password")}
@@ -143,8 +160,16 @@ class EditPofile extends Component {
     );
 
     render() {
-        const { id, name, email, password, redirectToProfile, error, loading } =
-            this.state;
+        const {
+            id,
+            name,
+            email,
+            password,
+            redirectToProfile,
+            error,
+            loading,
+            about,
+        } = this.state;
 
         if (redirectToProfile) {
             return <Redirect to={`/user/${id}`}></Redirect>;
@@ -183,7 +208,7 @@ class EditPofile extends Component {
                     alt={name}
                 />
 
-                {this.signupForm(name, email, password)}
+                {this.signupForm(name, email, password, about)}
             </div>
         );
     }
