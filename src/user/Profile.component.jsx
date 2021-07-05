@@ -4,15 +4,28 @@ import { Redirect, Link } from "react-router-dom";
 import { read } from "./apiUser";
 import DefaultProfile from "../images/avatar.jpg";
 import DeleteUser from "./DeleteUser.component";
+import FollowProfileButton from "./FollowProfileButton.component";
 
 class Profile extends Component {
     constructor() {
         super();
         this.state = {
-            user: "",
+            user: { following: [], followers: [] },
             redirectToSignin: false,
+            following: false,
         };
     }
+
+    /// check follow
+    checkFollow = (user) => {
+        const jwt = isAuthenticated();
+        // console.log(user);
+        const match = user.followers.find((follower) => {
+            // one id has many other ids (followers) and vice versa
+            return follower._id === jwt.user._id;
+        });
+        return match;
+    };
 
     init = (userId) => {
         const token = isAuthenticated().token;
@@ -20,7 +33,8 @@ class Profile extends Component {
             if (data.error) {
                 this.setState({ redirectToSignin: true });
             } else {
-                this.setState({ user: data });
+                let following = this.checkFollow(data);
+                this.setState({ user: data, following });
             }
         });
     };
@@ -71,18 +85,22 @@ class Profile extends Component {
                         </div>
 
                         {isAuthenticated().user &&
-                            isAuthenticated().user._id === user._id && (
-                                <div className="d-inline-block      ">
-                                    <Link
-                                        className="btn btn-raised btn-success mr-5"
-                                        to={`/user/edit/${user._id}`}
-                                    >
-                                        Edit Profile
-                                    </Link>
+                        isAuthenticated().user._id === user._id ? (
+                            <div className="d-inline-block      ">
+                                <Link
+                                    className="btn btn-raised btn-success mr-5"
+                                    to={`/user/edit/${user._id}`}
+                                >
+                                    Edit Profile
+                                </Link>
 
-                                    <DeleteUser userId={user._id}></DeleteUser>
-                                </div>
-                            )}
+                                <DeleteUser userId={user._id}></DeleteUser>
+                            </div>
+                        ) : (
+                            <FollowProfileButton
+                                following={this.state.following}
+                            />
+                        )}
                     </div>
                 </div>
                 <div className="row">
