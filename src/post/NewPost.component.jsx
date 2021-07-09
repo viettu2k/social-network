@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import { create } from "./apiPost";
-// import DefaultProfile from "../images/avatar.jpg";
 
 class NewPost extends Component {
     constructor() {
@@ -18,23 +17,6 @@ class NewPost extends Component {
             redirectToProfile: false,
         };
     }
-
-    // init = (userId) => {
-    //     const token = isAuthenticated().token;
-    //     read(userId, token).then((data) => {
-    //         if (data.error) {
-    //             this.setState({ redirectToProfile: true });
-    //         } else {
-    //             this.setState({
-    //                 id: data._id,
-    //                 name: data.name,
-    //                 email: data.email,
-    //                 error: "",
-    //                 about: data.about,
-    //             });
-    //         }
-    //     });
-    // };
 
     componentDidMount() {
         this.postData = new FormData();
