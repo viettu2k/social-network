@@ -10,6 +10,7 @@ import EditPofile from "./user/EditPofile.component";
 import FindPeople from "./user/FindPeople.component";
 import NewPost from "./post/NewPost.component";
 import SinglePost from "./post/SinglePost.component";
+import EditPost from "./post/EditPost.component";
 import PrivateRoute from "./auth/PrivateRoute";
 
 const MainRouter = () => (
@@ -17,10 +18,15 @@ const MainRouter = () => (
         <Menu />
         <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/signup" component={Signup} />
             <PrivateRoute exact path="/post/create" component={NewPost} />
             <Route exact path="/post/:postId" component={SinglePost} />
+            <PrivateRoute
+                exact
+                path="/post/edit/:postId"
+                component={EditPost}
+            />
             <Route exact path="/users" component={Users} />
+            <Route exact path="/signup" component={Signup} />
             <Route exact path="/signin" component={Signin} />
             <PrivateRoute
                 exact

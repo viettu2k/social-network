@@ -53,8 +53,8 @@ class SinglePost extends Component {
                     onError={(i) => (i.target.src = `${DefaultPost}`)}
                     className="img-thumbnail mb-3"
                     style={{
-                        height: "300px",
-                        width: "100%",
+                        height: "auto",
+                        width: "auto",
                         objectFit: "cover",
                     }}
                 />
@@ -74,9 +74,13 @@ class SinglePost extends Component {
                     {isAuthenticated().user &&
                         isAuthenticated().user._id === post.postedBy._id && (
                             <>
-                                <button className="btn btn-raised btn-success mr-5">
-                                    Update Post
-                                </button>
+                                <Link
+                                    to={`/post/edit/${post._id}`}
+                                    className="btn btn-raised btn-success btn-sm mr-5"
+                                >
+                                    Edit Post
+                                </Link>
+
                                 <button
                                     onClick={this.deleteConfirmed}
                                     className="btn btn-raised btn-danger"

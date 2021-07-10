@@ -19,6 +19,7 @@ class EditPofile extends Component {
             about: "",
         };
     }
+
     init = (userId) => {
         const token = isAuthenticated().token;
         read(userId, token).then((data) => {
