@@ -3,6 +3,7 @@ import { singlePost, remove, like, unlike } from "./apiPost";
 import { Link, Redirect } from "react-router-dom";
 import DefaultPost from "../images/meme.jpg";
 import { isAuthenticated } from "../auth";
+import Comment from "./Comment.component";
 
 class SinglePost extends Component {
     state = {
@@ -11,6 +12,7 @@ class SinglePost extends Component {
         redirectToSignin: false,
         like: false,
         likes: 0,
+        comments: [],
     };
 
     checkLike = (likes) => {
@@ -29,9 +31,14 @@ class SinglePost extends Component {
                     post: data,
                     likes: data.likes.length,
                     like: this.checkLike(data.likes),
+                    comments: data.comments,
                 });
             }
         });
+    };
+
+    updateComments = (comments) => {
+        this.setState({ comments });
     };
 
     likeToggle = () => {
@@ -116,11 +123,14 @@ class SinglePost extends Component {
                 )}
 
                 <p className="card-text">{post.body}</p>
+
                 <br />
+
                 <p className="font-italic mark">
                     Posted by <Link to={`${posterId}`}>{posterName} </Link>
                     on {new Date(post.created).toDateString()}
                 </p>
+
                 <div className="d-inline-block">
                     <Link
                         to={`/`}
@@ -128,6 +138,7 @@ class SinglePost extends Component {
                     >
                         Back to posts
                     </Link>
+
                     {isAuthenticated().user &&
                         isAuthenticated().user._id === post.postedBy._id && (
                             <>
@@ -152,7 +163,7 @@ class SinglePost extends Component {
     };
 
     render() {
-        const { post, redirectToHome, redirectToSignin } = this.state;
+        const { post, redirectToHome, redirectToSignin, comments } = this.state;
 
         if (redirectToHome) {
             return <Redirect to={`/`}></Redirect>;
@@ -171,6 +182,12 @@ class SinglePost extends Component {
                 ) : (
                     this.renderPost(post)
                 )}
+
+                <Comment
+                    postId={post._id}
+                    comments={comments}
+                    updateComments={this.updateComments}
+                />
             </div>
         );
     }
