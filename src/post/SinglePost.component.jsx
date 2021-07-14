@@ -141,7 +141,7 @@ class SinglePost extends Component {
 
                     {isAuthenticated().user &&
                         isAuthenticated().user._id === post.postedBy._id && (
-                            <>
+                            <React.Fragment>
                                 <Link
                                     to={`/post/edit/${post._id}`}
                                     className="btn btn-raised btn-success btn-sm mr-5"
@@ -155,7 +155,7 @@ class SinglePost extends Component {
                                 >
                                     Delete Post
                                 </button>
-                            </>
+                            </React.Fragment>
                         )}
                 </div>
             </div>

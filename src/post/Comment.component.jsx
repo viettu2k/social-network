@@ -140,7 +140,7 @@ class Comment extends Component {
                                         {isAuthenticated().user &&
                                             isAuthenticated().user._id ===
                                                 comment.postedBy._id && (
-                                                <>
+                                                <React.Fragment>
                                                     <span
                                                         onClick={() =>
                                                             this.deleteConfirmed(
@@ -151,7 +151,7 @@ class Comment extends Component {
                                                     >
                                                         Remove
                                                     </span>
-                                                </>
+                                                </React.Fragment>
                                             )}
                                     </span>
                                 </p>

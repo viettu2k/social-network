@@ -41,7 +41,7 @@ const Menu = ({ history }) => (
             </li>
 
             {!isAuthenticated() && (
-                <>
+                <React.Fragment>
                     <li className="nav-item">
                         <Link
                             className="nav-link"
@@ -61,11 +61,11 @@ const Menu = ({ history }) => (
                             Sign Up
                         </Link>
                     </li>
-                </>
+                </React.Fragment>
             )}
 
             {isAuthenticated() && (
-                <>
+                <React.Fragment>
                     <li className="nav-item">
                         <Link
                             to={`/findpeople`}
@@ -101,7 +101,7 @@ const Menu = ({ history }) => (
                             Sign Out
                         </span>
                     </li>
-                </>
+                </React.Fragment>
             )}
         </ul>
     </div>
