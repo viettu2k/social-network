@@ -24,11 +24,10 @@ class EditPost extends Component {
                 this.setState({ redirectToProfile: true });
             } else {
                 this.setState({
-                    id: data._id,
+                    id: data.postedBy._id,
                     title: data.title,
                     body: data.body,
                     error: "",
-                    about: data.about,
                 });
             }
         });
@@ -169,7 +168,9 @@ class EditPost extends Component {
                     alt={title}
                 />
 
-                {this.editPostForm(title, body)}
+                {isAuthenticated().user.role === "admin" ||
+                    (isAuthenticated().user._id === id &&
+                        this.editPostForm(title, body))}
             </div>
         );
     }

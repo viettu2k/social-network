@@ -217,7 +217,9 @@ class EditPofile extends Component {
                     alt={name}
                 />
 
-                {this.signupForm(name, email, password, about)}
+                {isAuthenticated().user.role === "admin" ||
+                    (isAuthenticated().user._id === id &&
+                        this.signupForm(name, email, password, about))}
             </div>
         );
     }
