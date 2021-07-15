@@ -9,12 +9,14 @@ class Posts extends Component {
         this.state = {
             posts: [],
             page: 1,
+            noMorePosts: false,
         };
     }
 
     loadPosts = (page) => {
         list(page).then((data) => {
             if (data.error) {
+                this.setState({ noMorePosts: true });
                 console.log(data.error);
             } else {
                 this.setState({ posts: data });
@@ -25,7 +27,6 @@ class Posts extends Component {
     componentDidMount() {
         this.loadPosts(this.state.page);
     }
-
     loadMore = (number) => {
         this.setState({ page: this.state.page + number });
         this.loadPosts(this.state.page + number);
@@ -91,8 +92,7 @@ class Posts extends Component {
         return (
             <div className="container">
                 <h2 className="mt-5 mb-5">
-                    {" "}
-                    {!posts.length ? "Loading..." : "Recent Posts"}{" "}
+                    {!posts.length ? "No more posts!" : "Recent Posts"}
                 </h2>
 
                 {this.renderPosts(posts)}

@@ -70,7 +70,7 @@ class EditPost extends Component {
         this.setState({ loading: true });
 
         if (this.isValid()) {
-            const postId = this.state.id;
+            const postId = this.props.match.params.postId;
             const token = isAuthenticated().token;
 
             update(postId, token, this.postData).then((data) => {
@@ -168,9 +168,11 @@ class EditPost extends Component {
                     alt={title}
                 />
 
-                {isAuthenticated().user.role === "admin" ||
-                    (isAuthenticated().user._id === id &&
-                        this.editPostForm(title, body))}
+                {isAuthenticated().user.role === "admin" &&
+                    this.editPostForm(title, body)}
+
+                {isAuthenticated().user._id === id &&
+                    this.editPostForm(title, body)}
             </div>
         );
     }
