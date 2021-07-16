@@ -1,5 +1,5 @@
 export const read = (userId, token) => {
-    return fetch(`${process.env.REACT_APP_API_URL}/user/${userId}`, {
+    return fetch(`https://evening-earth-21357.herokuapp.com/user/${userId}`, {
             method: "GET",
             headers: {
                 Accept: "application/json",
@@ -15,7 +15,7 @@ export const read = (userId, token) => {
 
 export const update = (userId, token, user) => {
     console.log("USER DATA UPDATE", user);
-    return fetch(`${process.env.REACT_APP_API_URL}/user/${userId}`, {
+    return fetch(`https://evening-earth-21357.herokuapp.com/user/${userId}`, {
             method: "PUT",
             headers: {
                 Accept: "application/json",
@@ -30,7 +30,7 @@ export const update = (userId, token, user) => {
 };
 
 export const remove = (userId, token) => {
-    return fetch(`${process.env.REACT_APP_API_URL}/user/${userId}`, {
+    return fetch(`https://evening-earth-21357.herokuapp.com/user/${userId}`, {
             method: "DELETE",
             headers: {
                 Accept: "application/json",
@@ -45,7 +45,7 @@ export const remove = (userId, token) => {
 };
 
 export const list = () => {
-    return fetch(`${process.env.REACT_APP_API_URL}/users`, {
+    return fetch(`https://evening-earth-21357.herokuapp.com/users`, {
             method: "GET",
         })
         .then((response) => {
@@ -66,7 +66,7 @@ export const updateUser = (user, next) => {
 };
 
 export const follow = (userId, token, followId) => {
-    return fetch(`${process.env.REACT_APP_API_URL}/user/follow`, {
+    return fetch(`https://evening-earth-21357.herokuapp.com/user/follow`, {
             method: "PUT",
             headers: {
                 Accept: "application/json",
@@ -82,7 +82,7 @@ export const follow = (userId, token, followId) => {
 };
 
 export const unfollow = (userId, token, unfollowId) => {
-    return fetch(`${process.env.REACT_APP_API_URL}/user/unfollow`, {
+    return fetch(`https://evening-earth-21357.herokuapp.com/user/unfollow`, {
             method: "PUT",
             headers: {
                 Accept: "application/json",
@@ -98,14 +98,16 @@ export const unfollow = (userId, token, unfollowId) => {
 };
 
 export const findPeople = (userId, token) => {
-    return fetch(`${process.env.REACT_APP_API_URL}/user/findPeople/${userId}`, {
-            method: "GET",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token}`,
-            },
-        })
+    return fetch(
+            `https://evening-earth-21357.herokuapp.com/user/findPeople/${userId}`, {
+                method: "GET",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        )
         .then((response) => {
             return response.json();
         })

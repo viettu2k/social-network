@@ -22,7 +22,7 @@ class ProfileTabs extends Component {
                                         className="float-left mr-2"
                                         height="30px"
                                         width="30px"
-                                        src={`${process.env.REACT_APP_API_URL}/user/photo/${person._id}`}
+                                        src={`https://evening-earth-21357.herokuapp.com/user/photo/${person._id}`}
                                         alt={person.name}
                                         onError={(i) =>
                                             (i.target.src = `${DefaultProfile}`)
@@ -49,7 +49,7 @@ class ProfileTabs extends Component {
                                         className="float-left mr-2"
                                         height="30px"
                                         width="30px"
-                                        src={`${process.env.REACT_APP_API_URL}/user/photo/${person._id}`}
+                                        src={`https://evening-earth-21357.herokuapp.com/user/photo/${person._id}`}
                                         alt={person.name}
                                         onError={(i) =>
                                             (i.target.src = `${DefaultProfile}`)

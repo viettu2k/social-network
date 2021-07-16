@@ -52,7 +52,7 @@ class Posts extends Component {
                         <div className="card col-md-4" key={i}>
                             <div className="card-body">
                                 <img
-                                    src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
+                                    src={`https://evening-earth-21357.herokuapp.com/post/photo/${post._id}`}
                                     alt={post.title}
                                     onError={(i) =>
                                         (i.target.src = `${DefaultPost}`)

@@ -28,7 +28,7 @@ class Users extends Component {
                     <img
                         style={{ height: "200px", width: "auto" }}
                         className="img-thumbnail"
-                        src={`${process.env.REACT_APP_API_URL}/user/photo/${user._id}`}
+                        src={`https://evening-earth-21357.herokuapp.com/user/photo/${user._id}`}
                         onError={(i) => (i.target.src = `${DefaultProfile}`)}
                         alt={user.name}
                     />

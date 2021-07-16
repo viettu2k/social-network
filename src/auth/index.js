@@ -1,5 +1,5 @@
 export const signup = (user) => {
-    return fetch(`${process.env.REACT_APP_API_URL}/signup`, {
+    return fetch(`https://evening-earth-21357.herokuapp.com/signup`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -14,7 +14,7 @@ export const signup = (user) => {
 };
 
 export const signin = (user) => {
-    return fetch(`${process.env.REACT_APP_API_URL}/signin`, {
+    return fetch(`https://evening-earth-21357.herokuapp.com/signin`, {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -38,7 +38,7 @@ export const authenticate = (jwt, next) => {
 export const signout = (next) => {
     if (typeof window !== "undefined") localStorage.removeItem("jwt");
     next();
-    return fetch(`${process.env.REACT_APP_API_URL}/signout`, {
+    return fetch(`https://evening-earth-21357.herokuapp.com/signout`, {
             method: "GET",
         })
         .then((response) => {
@@ -62,7 +62,7 @@ export const isAuthenticated = () => {
 
 export const forgotPassword = (email) => {
     console.log("email: ", email);
-    return fetch(`${process.env.REACT_APP_API_URL}/forgot-password/`, {
+    return fetch(`https://evening-earth-21357.herokuapp.com/forgot-password/`, {
             method: "PUT",
             headers: {
                 Accept: "application/json",
@@ -78,7 +78,7 @@ export const forgotPassword = (email) => {
 };
 
 export const resetPassword = (resetInfo) => {
-    return fetch(`${process.env.REACT_APP_API_URL}/reset-password/`, {
+    return fetch(`https://evening-earth-21357.herokuapp.com/reset-password/`, {
             method: "PUT",
             headers: {
                 Accept: "application/json",
@@ -94,7 +94,7 @@ export const resetPassword = (resetInfo) => {
 };
 
 export const socialLogin = (user) => {
-    return fetch(`${process.env.REACT_APP_API_URL}/social-login/`, {
+    return fetch(`https://evening-earth-21357.herokuapp.com/social-login/`, {
             method: "POST",
             headers: {
                 Accept: "application/json",

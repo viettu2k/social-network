@@ -185,9 +185,7 @@ class EditPofile extends Component {
         }
 
         const photoUrl = id
-            ? `${
-                  process.env.REACT_APP_API_URL
-              }/user/photo/${id}?${new Date().getTime()}`
+            ? `https://evening-earth-21357.herokuapp.com/user/photo/${id}?${new Date().getTime()}`
             : DefaultProfile;
 
         return (
