@@ -92,20 +92,3 @@ export const resetPassword = (resetInfo) => {
         })
         .catch((err) => console.log(err));
 };
-
-export const socialLogin = (user) => {
-    return fetch(`https://evening-earth-21357.herokuapp.com/social-login/`, {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-            },
-            // credentials: "include", // works only in the same origin
-            body: JSON.stringify(user),
-        })
-        .then((response) => {
-            console.log("signin response: ", response);
-            return response.json();
-        })
-        .catch((err) => console.log(err));
-};
